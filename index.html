@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Repeat With Me!</title>
+    <link rel="icon" type="image/x-icon" href="/images/day.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      .mainbody{height:100vh;font-family:var(--ff7);}
+      .canvasDiv{z-index:-10}
+      .allpage{display:flex;flex-direction:column;height: 100%;width:100%;display:none;}
+
+      /* # ====================================== PAGE 1 ====================================== */
+      .landing{justify-content: center;padding-bottom: 140px;}
+      .landingUsername{font-size:18px;font-weight:600;}
+      .landingInput{font-family:var(--ff7);font-size:18px;background:transparent;border:none;border-bottom:1px solid #3a3a3a;
+        padding:3px;width:160px;font-weight:400;}
+      .landingButton {background-color: #0095ff;border: 1px solid transparent;border-radius: 3px;white-space: nowrap;
+        box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;box-sizing: border-box;color: #fff;cursor: pointer;
+        display: inline-block;font-size: 16px;font-weight: 400;line-height: 1.15385;padding: 8px .8em;position: relative;
+        text-align: center;text-decoration: none;user-select: none;-webkit-user-select: none;touch-action: manipulation;
+        vertical-align: baseline;width:120px;}
+      .landingButton:hover,.landingButton:focus {background-color: #07c;}
+      .landingButton:focus {box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);}
+      .landingButton:active {background-color: #0064bd;box-shadow: none;}
+      .landingButtonActive {background-color: #0064bd;box-shadow: none;}
+
+      /* # ====================================== PAGE 2 ====================================== */
+      .sentence{height:100%;overflow:auto;padding-bottom: 2000px;}
+      .sentenceTitle{font-size:18px;font-weight:600;text-align: center;padding:40px 20px 20px 20px;}
+      .sentenceInput{border:none;border-bottom:1px solid #3a3a3a;flex-grow: 1;padding:0 5px;margin-left: 5px;}
+      .sentenceTimes{height: 30px;width: 30px;}
+      .sentenceList{padding:20px 20px 20px 40px;}
+
+      /* # ====================================== PAGE 3 ====================================== */
+      .records{padding:30px 20px;overflow:auto;}
+      .recordsImage{height:24px;width:24px;border:var(--bor);}
+      .recordsMainDate{display:flex;justify-content:flex-end;align-items: center;gap:16px;padding-bottom:10px;}
+      .recordsNavigation{display:flex;justify-content:flex-end;align-items: center;gap:22px;padding-bottom:10px;}
+      .recordsCountDay{font-weight:500;}
+      .recordsNumbers{font-weight:500;}
+      .recordsHeartLine{width:60px;height:14px;border-radius:10px;overflow:hidden;}
+      .recordsMainList{padding:10px;padding-left: 30px;}
+      .recordsMainList li{margin-bottom:10px;}
+      .recordsButtonCover{display: flex;justify-content: center;padding-top: 40px;padding-bottom: 100px;}
+      
+      /* # ====================================== PAGE 4 ====================================== */
+      .setting{padding:30px 20px;overflow:auto;}
+      .settingButtonTimesCover{display: flex;justify-content: flex-end;padding-top:5px;padding-bottom: 20px;}
+      .settingButtonTimes{height:24px;width:24px;}
+      .settingList{list-style-type:none;}
+      .settingList li{margin-bottom:16px;}
+      .settingLiDiv{display: flex;justify-content: center;gap:15px;}
+      .settingLiDiv div,a{font-weight:500;}
+      .settingLiDiv input{width:36px;border:none;border-bottom:1px solid #000;background:transparent;text-align:center;font-size:16px;
+        font-family:var(--ff7);display:none;}
+
+      /* # ====================================== PAGE 5 ====================================== */
+      .about{padding:30px 20px;overflow:auto;}
+      .aboutButtonTimesCover{display: flex;justify-content: flex-end;padding-top:5px;padding-bottom: 20px;}
+      .aboutButtonTimes{height:24px;width:24px;}
+      .aboutRepeatInfo{line-height:28px;text-align:justify;margin-bottom: 10px;}
+      .aboutImageCrate{display: flex;justify-content: center;align-items: center;gap: 10px;margin-top: 10px;}
+      .aboutImageCrate p{font-weight:500;}
+      .aboutImageCrate a{text-decoration: none;color:#000;font-weight:500;}
+      .aboutIcons{height:26px;width:26px;}
+      /* # ====================================== PAGE All ====================================== */
+      .tac{text-align:center;}
+      .flexjcc{display: flex;justify-content: center;}
+      .gap2{gap:2rem;}
+      .transparentBg{background:transparent;}
+      .gap-16px{gap:16px;}
+      .gap-10px{gap:10px;}
+    </style>
+  </head>
+  <body>
+    <div class="mainbody bor">
+      <div class="bor hw100 rel">
+        <div class="canvasDiv flex abs hw100 bor">
+          <canvas class="bgCanvas hw100 bor"></canvas>
+        </div>
+        <div class="hw100 rel bor">
+          <!-- % ====================================== PAGE 1 ====================================== -->
+          <div class="page1 landing allpage bor" data-page="landing">
+            <!-- <h3 class="flexjcc p10 bor">Page 1</h3> -->
+            <div class="landingUsername flexjcc bor pb10">Username</div>
+            <div class="flexjcc bor">
+              <input type="text" class="landingInput tac" placeholder="your name..." value="">
+            </div>
+            <div class="flexjcc pt30 bor">
+              <div class="btnNext landingButton borx" onclick="goToSentencePage()">Next</div>
+            </div>
+          </div>
+          <!-- % ====================================== PAGE 2 ====================================== -->
+          <div class="page2 sentence allpage bor" data-page="sentence">
+            <div class="sentenceTitle p20 bor">Sentence</div>
+            <div class="flexcol bor">
+              <ol class="listDiv sentenceList bor">
+              </ol>
+              <div class="flexjcc ">
+                <div class="landingButton borx ptb5 plr10 cup" onclick="addItem()">Add Item</div>
+              </div>
+            </div>
+
+            <div class="sentenceBeginnerBtnCrate flexjcc gap2 pt30">
+              <div class="btnNext landingButton borx" onclick="gotoPage(1)">Prev</div>
+              <div class="btnNext landingButton borx" onclick="clickSentenceNextBtn()">Next</div>
+            </div>
+            <div class="sentenceVeteranBtnCrate flexjcc gap2 pt30">
+              <div class="btnNext landingButton borx" onclick="gotoPage(2)">Cancel</div>
+              <div class="btnNext landingButton borx" onclick="clickSentenceNextBtn()">Save</div>
+            </div>
+          </div>
+          <!-- % ====================================== PAGE 3 ====================================== -->
+          <div class="page3 records allpage borx" data-page="records">
+            
+            <div class="recordsMainDate bor">
+              <div class="flexmid" style="gap:6px">
+                <img src="images/day.png" class="recordsImage"/>
+                <div class="recordsCountDay recordsNumbers">280</div>
+              </div>
+              
+              <div class="recordsDay">Wed,</div>
+              <div class="recordsDate">6 Dec, 2023</div>
+              <div class="flexmid ">
+                <img src="images/cogs.png" class="recordsImage cup" onclick="gotoPage(4)"/>
+              </div>
+            </div>
+            <div class="recordsNavigation bor"> 
+              <div class="flexmid" style="gap:6px">
+                <img src="images/fire.png" class="recordsImage"/>
+                <div class="recordsStreak recordsNumbers">8</div>
+              </div>
+              <div class="flexmid" style="gap:6px">
+                <img src="images/temple.png" class="recordsImage"/>
+                <div class="recordsRepeatCount recordsNumbers">8</div>
+              </div>
+              <div class="flexmid" style="gap:6px">
+                <img src="images/pray.png" class="recordsImage"/>
+                <div class="recordsRepeat recordsNumbers">8</div>
+              </div>
+              <div class="flexmid" style="gap:6px">
+                <img src="images/heart.png" class="recordsImage"/>
+                <div class="recordsHeartLine rel flex borx">
+                  <div class="recordsHeartMeter bg8 h100">
+                    <!-- @ Heart Meter --> 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="recordsListCover bor">
+              <ol class="recordsMainList bor">
+                <li>hello</li>
+              </ol>
+            </div>
+            <div class="recordsButtonCover">
+              <div class="recordButton landingButton bor" onclick="IHaveReadCooldown()">I've Read.</div>
+            </div>
+          </div>
+          <!-- % ====================================== PAGE 4 ====================================== -->
+          <div class="page4 setting allpage bor" data-page="setting">
+            <!-- <h3 class="flexjcc p10 bor">Page 4</h3> -->
+            <div class="settingButtonTimesCover bor">
+              <img src="images/times.png" class="settingButtonTimes bor cup" onclick="gotoPage(3)"/>
+            </div>
+            <div class="flex  ptb20 plr40">
+              <ul class="settingList flexcol w100">
+                <!-- Total Day, Streak, Total Repeat, Today's Repeat, Max Repeat -->
+                <!-- Update Sentences, Hyper Link, About, Clear Data -->
+                <!-- Save Changes  -->
+                <li class="w100 bor">
+                  <div class="settingLiDiv settingListTotalDay bor" data-setting-title="Total Days" onclick="settingHiddenButton('totalDay')">
+                    <div class="">Total Day</div><div class="settingNumTotalDay">1001</div>
+                    <input type="text" value="1001" class="settingInpTotalDay"/>  
+                  </div>
+                </li>
+                <li class="w100 bor">
+                  <div class="settingLiDiv settingListTotalDay bor" data-setting-title="Streak" onclick="settingHiddenButton('streak')">
+                    <div class="">Streak</div><div class="settingNumStreak">1002</div>
+                    <input type="text" value="1002" class="settingInpStreak"/>  
+                  </div>
+                </li>
+                <li class="w100 bor">
+                  <div class="settingLiDiv settingListTotalDay bor" data-setting-title="Total Repeat" onclick="settingHiddenButton('totalRepeat')">
+                    <div class="">Total Repeat</div><div class="settingNumTotalRepeat">1003</div>
+                    <input type="text" value="1003" class="settingInpTotalRepeat"/>  
+                  </div>
+                </li>
+                <li class="w100 bor">
+                  <div class="settingLiDiv settingListTotalDay bor" data-setting-title="Today's Repeat" onclick="settingHiddenButton('todaysRepeat')">
+                    <div class="">Today's Repeat</div><div class="settingNumTodaysRepeat">1004</div>
+                    <input type="text" value="1004" class="settingInpTodaysRepeat"/>  
+                  </div>
+                </li>
+                <li class="w100 bor">
+                  <div class="settingLiDiv settingListTotalDay bor" data-setting-title="Max Repeat" onclick="settingHiddenButton('maxRepeat')">
+                    <div class="">Max Repeat</div><div class="settingNumMaxRepat">1005</div>
+                    <input type="text" value="1005" class="settingInpMaxRepat"/>  
+                  </div>
+                </li>
+                <li class="w100 settingLiDiv bor">
+                  <div class="bor" onclick="gotoPage(2)">
+                    Update Sentences
+                  </div>
+                </li>
+                <li class="w100 settingLiDiv bor">
+                  <a href="https://kritesh01.github.io/repeat-v1/" class="txt bor">
+                    Hyper Link
+                  </a>
+                </li>
+                <li class="w100 settingLiDiv bor">
+                  <div class="bor" onclick="gotoAboutPage()">
+                    About
+                  </div>
+                </li>
+                <li class="w100 settingLiDiv bor">
+                  <div class="bor" onclick="clearLocalStorage()">
+                    Clear Data
+                  </div>
+                </li>
+                <li class="w100 settingLiDiv">
+                  <div class="settingHiddenSave bor none" onclick="setNewRepeatValues()">
+                    Save Changes
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- % ====================================== PAGE 5 ====================================== -->
+          <div class="about page5 allpage bor" data-page="about">
+            <div class="aboutButtonTimesCover bor">
+              <img src="images/times.png" class="aboutButtonTimes bor cup" onclick="gotoPage(3)"/>
+            </div>
+            <p class="aboutRepeatInfo">
+              Repetition is emphasized as a key technique to harness the subconscious mind's transformative abilities.
+              The book "The Power of your subconscious mind" by Joseph Murphy,
+              underscores the importance of consistently affirming positive beliefs and desires, 
+              asserting that repeated thoughts can deeply influence one's behavior and shape the course of life.
+            </p>
+            <p class="aboutRepeatInfo">
+              This web app is developed by Kritesh Thapa to help people who wants to apply the repetition process 
+              from the book "The Power of your subconscious mind". This app keeps the records of what does user want to repeat,
+              the day when the user has started to use this app, streak, total repetiton, and repetiton on that day.
+            </p>
+            <p class="aboutRepeatInfo">
+              No data is colleced. Your all data is stored in your browser and you can clear your data any time from the setting.
+            </p>
+            <div class="aboutImageCrate bor">
+              <img src="/images/developer.png" class="aboutIcons"/>
+              <p>
+                Kritesh Thapa - 14/12/2023
+              </p>
+            </div>
+            <div class="aboutImageCrate bor">
+              <img src="/images/email.png" class="aboutIcons"/>
+              <a href = "mailto:herethapamagar@gmail.com?subject = Let's have a chat.&body = Hello Kritesh," target=”_blank”>
+                herethapamagar@gmail.com
+              </a>
+            </div>
+            <div class="aboutImageCrate bor">
+              <img src="/images/instagram.png" class="aboutIcons"/>
+              <a href = "instagram.com/kritesh01/" target=”_blank”>
+                kritesh01
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
