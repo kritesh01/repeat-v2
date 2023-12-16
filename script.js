@@ -696,17 +696,18 @@ function calcDateDiffrence(startDate){
 // ! ?????? NEED for testing.
 function diff(date1, date2){
   addToLog("Record-Sub{31-X}: diff("+date1+", "+date2+")");
+  addToLog("Record-Sub{31-X.1}: diff("+date1.replace(/-/g, "/")+", "+date2.replace(/-/g, "/")+")");
   // % converting date1 & date2 in new Date format
   const datex1 = new Date(date1.replace(/-/g, "/"));
   const datex2 = new Date(date2.replace(/-/g, "/"));
-  addToLog("Record-Sub{31-Y.1}: datex1 = "+datex1+", datex2 = "+datex2);
+  addToLog("Record-Sub{31-Y.2}: datex1 = "+datex1+", datex2 = "+datex2);
   // % To calculate the time difference of two dates
   const diff_in_time = datex2.getTime() - datex1.getTime();
-  addToLog("Record-Sub{31-Y.2}: diff_in_time = "+diff_in_time);
+  addToLog("Record-Sub{31-Y.3}: diff_in_time = "+diff_in_time);
   // % To calculate the no. of days between two dates
   const diff_in_days = Math.round(diff_in_time / (1000 * 3600 * 24));
   // % returning diff_in_days
-  addToLog("Record-Sub{31-Y.3}: diff_in_days = "+diff_in_days);
+  addToLog("Record-Sub{31-Y.4}: diff_in_days = "+diff_in_days);
   return diff_in_days;
 }
 
