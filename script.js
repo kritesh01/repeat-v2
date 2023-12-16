@@ -697,8 +697,8 @@ function calcDateDiffrence(startDate){
 function diff(date1, date2){
   addToLog("Record-Sub{31-X}: diff("+date1+", "+date2+")");
   // % converting date1 & date2 in new Date format
-  const datex1 = new Date(date1);
-  const datex2 = new Date(date2);
+  const datex1 = new Date(date1.replace(/-/g, "/"));
+  const datex2 = new Date(date2.replace(/-/g, "/"));
   addToLog("Record-Sub{31-Y.1}: datex1 = "+datex1+", datex2 = "+datex2);
   // % To calculate the time difference of two dates
   const diff_in_time = datex2.getTime() - datex1.getTime();
