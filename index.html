@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Repeat With Me!</title>
-    <link rel="icon" type="image/x-icon" href="/images/day.png">
+    <link rel="icon" type="image/x-icon" href="images/day.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <style>
@@ -64,6 +64,11 @@
       .aboutImageCrate p{font-weight:500;}
       .aboutImageCrate a{text-decoration: none;color:#000;font-weight:500;}
       .aboutIcons{height:26px;width:26px;}
+
+      /* # ====================================== PAGE 6 ====================================== */
+      .log{padding:30px 20px;overflow:auto;}
+      .logButtonTimesCover{display: flex;justify-content: flex-end;padding-top:5px;padding-bottom: 20px;}
+      .logButtonTimes{height:24px;width:24px;}
       /* # ====================================== PAGE All ====================================== */
       .tac{text-align:center;}
       .flexjcc{display: flex;justify-content: center;}
@@ -88,7 +93,7 @@
               <input type="text" class="landingInput tac" placeholder="your name..." value="">
             </div>
             <div class="flexjcc pt30 bor">
-              <div class="btnNext landingButton borx" onclick="goToSentencePage()">Next</div>
+              <div class="btnNext landingButton bor" onclick="goToSentencePage()">Next</div>
             </div>
           </div>
           <!-- % ====================================== PAGE 2 ====================================== -->
@@ -98,21 +103,21 @@
               <ol class="listDiv sentenceList bor">
               </ol>
               <div class="flexjcc ">
-                <div class="landingButton borx ptb5 plr10 cup" onclick="addItem()">Add Item</div>
+                <div class="landingButton bor ptb5 plr10 cup" onclick="addItem()">Add Item</div>
               </div>
             </div>
 
             <div class="sentenceBeginnerBtnCrate flexjcc gap2 pt30">
-              <div class="btnNext landingButton borx" onclick="gotoPage(1)">Prev</div>
-              <div class="btnNext landingButton borx" onclick="clickSentenceNextBtn()">Next</div>
+              <div class="btnNext landingButton bor" onclick="gotoPage(1)">Prev</div>
+              <div class="btnNext landingButton bor" onclick="clickSentenceNextBtn()">Next</div>
             </div>
             <div class="sentenceVeteranBtnCrate flexjcc gap2 pt30">
-              <div class="btnNext landingButton borx" onclick="gotoPage(2)">Cancel</div>
-              <div class="btnNext landingButton borx" onclick="clickSentenceNextBtn()">Save</div>
+              <div class="btnNext landingButton bor" onclick="gotoPage(3)">Go Back</div>
+              <div class="btnNext landingButton bor" onclick="clickSentenceNextBtn()">Save</div>
             </div>
           </div>
           <!-- % ====================================== PAGE 3 ====================================== -->
-          <div class="page3 records allpage borx" data-page="records">
+          <div class="page3 records allpage bor" data-page="records">
             
             <div class="recordsMainDate bor">
               <div class="flexmid" style="gap:6px">
@@ -199,7 +204,7 @@
                   </div>
                 </li>
                 <li class="w100 settingLiDiv bor">
-                  <div class="bor" onclick="gotoPage(2)">
+                  <div class="bor" onclick="setSentenceUpdate()">
                     Update Sentences
                   </div>
                 </li>
@@ -216,6 +221,11 @@
                 <li class="w100 settingLiDiv bor">
                   <div class="bor" onclick="clearLocalStorage()">
                     Clear Data
+                  </div>
+                </li>
+                <li class="w100 settingLiDiv bor">
+                  <div class="bor" onclick="gotoLog()">
+                    Log
                   </div>
                 </li>
                 <li class="w100 settingLiDiv">
@@ -246,23 +256,33 @@
               No data is colleced. Your all data is stored in your browser and you can clear your data any time from the setting.
             </p>
             <div class="aboutImageCrate bor">
-              <img src="/images/developer.png" class="aboutIcons"/>
+              <img src="images/developer.png" class="aboutIcons"/>
               <p>
                 Kritesh Thapa - 14/12/2023
               </p>
             </div>
             <div class="aboutImageCrate bor">
-              <img src="/images/email.png" class="aboutIcons"/>
+              <img src="images/email.png" class="aboutIcons"/>
               <a href = "mailto:herethapamagar@gmail.com?subject = Let's have a chat.&body = Hello Kritesh," target=”_blank”>
                 herethapamagar@gmail.com
               </a>
             </div>
             <div class="aboutImageCrate bor">
-              <img src="/images/instagram.png" class="aboutIcons"/>
-              <a href = "instagram.com/kritesh01/" target=”_blank”>
+              <img src="images/instagram.png" class="aboutIcons"/>
+              <a href = "https://www.instagram.com/kritesh01/" target=”_blank”>
                 kritesh01
               </a>
             </div>
+          </div>
+          <!-- % ====================================== PAGE 6 ====================================== -->
+          <div class="log page6 allpage bor" data-page="log">
+            <h2 class="mb10 flex jcsb">
+              Log
+              <img src="images/times.png" class="logButtonTimes bor cup" onclick="gotoPage(3)"/>
+            </h2>
+            <ol class="logContainer pl20 bor">
+              
+            </ol>
           </div>
         </div>
       </div>

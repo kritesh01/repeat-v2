@@ -11,7 +11,7 @@
 
 // # Defining div into variabls, usinf divv()
 // # Defining Main Five Main Pages.
-var page1=divv(".page1"),page2=divv(".page2"),page3=divv(".page3"),page4=divv(".page4"),page5=divv(".page5");
+var page1=divv(".page1"),page2=divv(".page2"),page3=divv(".page3"),page4=divv(".page4"),page5=divv(".page5"),page6=divv(".page6");
 // #
 var landingInput = divv(".landingInput");
 
@@ -48,6 +48,8 @@ var settingInpTotalRepeat = divv(".settingInpTotalRepeat");
 var settingInpTodaysRepeat = divv(".settingInpTodaysRepeat");
 var settingInpMaxRepat = divv(".settingInpMaxRepat");
 
+// # 
+var logContainer = divv(".logContainer");
 // # whwn btnCoolDown is false user can click I've Read button in record page(page 3)
 var btnCooldown = false;
 
@@ -141,6 +143,7 @@ firstFunction();
 // # [Page 0] [?-?-?]
 // # firstFunction() will run before any other function. It includes all function that needs to be called to run the app.
 function firstFunction(){
+  addToLog("Main{1-X}: firstFunction()");
   newOrOldUser()
   setRandomBGcolor()
   addItem()
@@ -149,23 +152,27 @@ function firstFunction(){
   setFullDate()
   setScreen()
   manageSentencePgButtons()
+  addToLog("Main{1-Z}: firstFunction()");
 }
 
 
 // # [Page 0] Background functions [?-?-?]
 // # [Page 0] setRandomBGcolor() is use for applying random background color from an array
 function setRandomBGcolor(){
+  addToLog("Main{2-X}: setRandomBGcolor()");
   // % random will random value from 0~5. Total 6 values.
   var random = Math.floor(Math.random()*(6));
   ctx.fillStyle = bgColorArr[random];
   ctx.fillRect(0,0,2000,1000);
+  addToLog("Main{2-Z}: setRandomBGcolor()");
 }
 
 // # [Page 0] Support functions [?-?-?]
 // # [Page 0] gotoPage(page) hides all pages and only display that partical page of page value
 function gotoPage(page){
+  addToLog("Main{3-X}: gotoPage("+page+")");
   // % hiding all pages from page 1 to page 5
-  hide(page1);hide(page2);hide(page3);hide(page4);hide(page5);
+  hide(page1);hide(page2);hide(page3);hide(page4);hide(page5);hide(page6);
   // % depending on the value passed in page (1~5), it will display that function.
   switch(page){
     case 1:page1.style.display="flex";break;
@@ -173,23 +180,38 @@ function gotoPage(page){
     case 3:page3.style.display="flex";break;
     case 4:page4.style.display="flex";break;
     case 5:page5.style.display="flex";break;
+    case 6:page6.style.display="flex";break;
   }
   // % resets settings data
   resetSettingData();
+  addToLog("Main{3-Z}: gotoPage("+page+")");
 }
 
 // # [Page 0] Support functions [?-?-?]
 // # [Page 0] Support function to assign <div> using its class name to variable
-function divv(divv){return document.querySelector(divv);}
+function divv(divv){
+  // addToLog("Main{4-XZ}: divv("+divv+")");
+  return document.querySelector(divv);
+}
 // # [Page 0] Support function hide the <div>. Which ever <div> is passed throught(in varibale form) will be hidden
-function hide(divv){divv.style.display = "none";}
+function hide(divv){
+  // addToLog("Main{5-XZ}: hide("+divv+")");
+  divv.style.display = "none";
+}
 // # [Page 0] Support function display/unhide the <div>. Which ever <div> is passed throught(in varibale form) will be exposed/unhide
-function expose(divv){divv.style.display = "flex";}
+function expose(divv){
+  // addToLog("Main{6-XZ}: expose("+divv+")");
+  divv.style.display = "flex";
+}
 // # [Page 0] Support function create new element. What ever element tag name is passed, it will create that element. Ex: ['div','li']
-function createNewElement(elementName){return document.createElement(elementName);}
+function createNewElement(elementName){
+  // addToLog("Main{7-XZ}: createNewElement("+elementName+")");
+  return document.createElement(elementName);
+}
 
 // # goToSentencePage() will take user form landing page(page 1) to sentence page(page 2) when condition are met.
 function goToSentencePage(){
+  addToLog("Main{4-X}: goToSentencePage()");
   // % checkUsername() will check if user has entered username or not
   if(checkUsername()){
     // % repeatObjReset has reset value of 0 and resetting repeatObj before starting
@@ -202,12 +224,15 @@ function goToSentencePage(){
     repeatObj.date = new Date().getDate();
     gotoPage(2);
   }
+  addToLog("Main{4-Z}: goToSentencePage()");
 }
 
 // # a support function, that checks if user has entered username in landing page(Page1) or not
 function checkUsername(){
+  addToLog("Main{5-X}: goToSentencePage()");
   // % depending on empty or valid username, it will store true or false
   const usernameNotEmpty = landingInput.value != "" ? true : false;
+  addToLog("Main{5-Z}: goToSentencePage()");
   return usernameNotEmpty;
 }
 
@@ -218,7 +243,8 @@ function checkUsername(){
 
 // # [Page 2] [?][?]
 // # [Page 2] addItem() is used for adding new input box in sentence page(page). used for adding new repeating sentence.
-function addItem(){
+function addItem(localData){
+  addToLog("Main{6-X}: addItem()");
   // % id is used for const value for item count
   const id = itemCount;
   // % crateCss an array of css class for crate element
@@ -235,7 +261,7 @@ function addItem(){
   // % new <input> element for addding inside order list
   var inputItem = createNewElement('input')
   // ! REMOVE IT
-  // ! REMOVED inputItem.value = "go dance";
+  inputItem.value = (localData==null || localData==undefined)?"":localData;
   // % new <div> element for addding inside order list
   var removeItem = createNewElement('div')
   // & <>~~~~~<>~~~~~<>~~~~~<>~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>
@@ -263,11 +289,13 @@ function addItem(){
   itemArr.forEach((item)=>{sentenceList.appendChild(item.li);})
   // % incrementing value of global varibale itemCount by 1 on each iteration. Every time new item is added it will increase by 1
   itemCount++;
+  addToLog("Main{6-X}: addItem()");
 }
 
 // # [Page 2] [?][?]
 // # [Page 2], removeItem(id) is used for removing item from array itemArr. And applying array effect in HTML page]
 function removeItem(id){
+  addToLog("Sentence{7-X}: removeItem("+id+")");
   // % id, is the id of item(li) of itemArr(ol) of HTML page. Used for removing item of that id.
   // % this filtering process remove item(li) from itemArr(ol) of that id
   itemArr = itemArr.filter(item => item.id !== id);
@@ -277,11 +305,13 @@ function removeItem(id){
   sentenceList.innerHTML=null;
   // % adding new filtered item(li) of itemArr(ol) inside sentenceList<ol> of HTML page
   itemArr.forEach((item)=>{sentenceList.appendChild(item.li);})
+  addToLog("Sentence{7-Z}: removeItem("+id+")");
 }
 
 // # [Page 2] [?][?]
 // # [Page 2], hasSentenceList() check if input box in sentece page(page 2) is filled up and there is atleast one item. It reutrn true or fasle.
 function hasSentenceList(){
+  addToLog("Sentence{8-X}: hasSentenceList()");
   // % initial value of porceedToNextPage is false
   var porceedToNextPage = false;
   // % totalItemLenght has the value of total item(li).length inside itemArray(ol) used for sentenceList<ol>
@@ -295,12 +325,14 @@ function hasSentenceList(){
   // % porceedToNextPage will have true value if itemArr(ol) has 1 or more value and inputBoxFilled value is true. Or else it will have false value
   porceedToNextPage = (itemArr.length > 0 && inputBoxFilled)? true : false;
   // % return value of porceedToNextPage. which is either true or false
+  addToLog("Sentence{8-Z}: hasSentenceList()");
   return porceedToNextPage;
 }
 
 // # [Page 2] [?][?]
 // # clickSentenceNextBtn() will take user from page 2 to page 3 depenging on the condition of hasSentenceList()
 function clickSentenceNextBtn(){
+  addToLog("Sentence{9-X}: clickSentenceNextBtn()");
   // % hasSentenceList() reurn true or false based on the itemArr(ol).
   // ^ It checks itemArr if find if array has 1 or more item and these item value is not empty
   if(hasSentenceList()){
@@ -320,12 +352,15 @@ function clickSentenceNextBtn(){
     // % taking user to records page(page 3)
     gotoPage(3)
   }
+  addToLog("Sentence{9-X}: clickSentenceNextBtn()");
 }
 
 // # support function for page 2, getItemArrSentence() takes user input and filters to get sentecnes list and stores in itemArrSenteces
 function getItemArrSentence(){
+  addToLog("Sentence{10-X}: getItemArrSentence()");
   // % takes user input and filters to get sentecnes list and stores in itemArrSenteces
   const itemArrSenteces = itemArr.map(item => {return item.input.value});
+  addToLog("Sentence{10-X}: getItemArrSentence()");
   return itemArrSenteces;
 }
 
@@ -337,6 +372,7 @@ function getItemArrSentence(){
 // # [Page 3] [?][?][?]
 // # [Page 3], setFullDate() sets the current date in recordsDate<div> variable of record page(page 3)
 function setFullDate(){
+  addToLog("Record{11-X}: setFullDate()");
   // % get date d from Date()
   const d = new Date();
   // % use d for gettting current date, month and year. Storing in specific format [08-12-2023] => [8, Dec 2023]
@@ -346,11 +382,13 @@ function setFullDate(){
   // % adding value of date and day in recordsDate<div> and recordsDay<div>
   recordsDate.innerText = date;
   recordsDay.innerText = day;
+  addToLog("Record{11-Z}: setFullDate()");
 }
 
 // # [Page 3] [?][?][?]
 // # [Page 3], setHeartMeter() sets heart meter in record page(page 3) of HTML page
 function setHeartMeter(){
+  addToLog("Record{12-X}: setHeartMeter()");
   // % take out toMaxRead and todayRepeat value from global object repeatObj
   const {toMaxRead, todayRepeat} = repeatObj;
   // % oneRead value depends on toMaxRead. It defines, how much a sigle read mean in percentage.
@@ -359,51 +397,61 @@ function setHeartMeter(){
   var currentReadMeter = todayRepeat >= toMaxRead ? 100 : oneRead * todayRepeat;
   // % applies currentReadMeter value to recordsHeartMeter<div>
   recordsHeartMeter.style.width = currentReadMeter + "%";
+  addToLog("Record{12-Z}: setHeartMeter()");
 }
 
 // # [Page 3] [?][?][?]
 // # [Page 3], setStreak() sets value for streak, used for recording if user is repeating every day or not in record page(page 3) of HTML page
 function setStreak(){
+  addToLog("Record{13-X}: setStreak()");
   // % taking out {repeatingStreak} from gobal object repeatObj
   const {repeatingStreak} = repeatObj;
   // % displaying value of repeatingStreak in recordsStreak<div> of sentence page(page3) of HTML page
   recordsStreak.innerText = repeatingStreak;
+  addToLog("Record{13-Z}: setStreak()");
   return repeatingStreak;
 }
 
 // # [Page 3] [?][?][?]
 // # [Page 3], setCountDay() sets count day since using this app in record page(page 3) of HTML page
 function setCountDay(){
+  addToLog("Record{14-X}: setCountDay()");
   // % taking out {totalDay} from gobal object repeatObj
   const {totalDay} = repeatObj;
   // % displaying value of totalDay in recordsCountDay<div> of sentence page(page3) of HTML page
   recordsCountDay.innerHTML = totalDay;
+  addToLog("Record{14-Z}: setCountDay()");
   return totalDay;
 }
 
 // # [Page 3] [?][?][?]
 // # [Page 3], setRepeatCount() sets repetition from day 0 to this day in record page(page 3) of HTML page
 function setRepeatCount(){
+  addToLog("Record{15-X}: setRepeatCount()");
   // % taking out {totalRepeat} from gobal object repeatObj
   const {totalRepeat} = repeatObj;
   // % displaying value of totalRepeat in recordsRepeat<div> of sentence page(page3) of HTML page
   recordsRepeatCount.innerText = totalRepeat;
+  addToLog("Record{15-Z}: setRepeatCount()");
   return totalRepeat;
 }
 
 // # [Page 3] [?][?][?]
 // # [Page 3], setRecordsRepeat() sets repetition in that day in record page(page 3) of HTML page
 function setRecordsRepeat(){
+  addToLog("Record{16-X}: setRecordsRepeat()");
   // % taking out {todayRepeat} from gobal object repeatObj
   const {todayRepeat} = repeatObj;
   // % displaying value of todayRepeat in recordsRepeat<div> of sentence page(page3) of HTML page
   recordsRepeat.innerText = todayRepeat;
+  addToLog("Record{17-Z}: setRecordsRepeat()");
   return todayRepeat;
 }
 
 // # [Page 3] [?][?][?]
 // # setSentences() set sentences from global object repeatObj to recordsMainList<ol> in record page(page 3) in screen
 function setSentences(){
+  addToLog("Record{18-X}: setSentences()");
   const listArr = [...repeatObj.items];
   // $ console.log("setSentences",listArr);
   recordsMainList.innerText = "";
@@ -412,13 +460,14 @@ function setSentences(){
     li.innerText = data;
     recordsMainList.appendChild(li);
   })
-
+  addToLog("Record{18-Z}: setSentences()");
 }
 
 // # [Page 3] [?][?][?]
 // # [Page 3], setNavigation() include all necesary function to handel record page(page 3) of HTML page
 // ^ It handels => date & day, heart meter, streak, day counting, sentence repetation for the day,sentence repetation till now
 function setNavigation(){
+  addToLog("Record{19-X}: setSentences()");
   setFullDate()
   setHeartMeter()
   setStreak()
@@ -426,6 +475,7 @@ function setNavigation(){
   setRepeatCount()
   setRecordsRepeat()
   setSentences()
+  addToLog("Record{19-Z}: setSentences()");
 }
 
 
@@ -435,6 +485,7 @@ function setNavigation(){
 
 // # settingHiddenButton(name) is hidden button. when used trigger hidden settings.
 function settingHiddenButton(name){
+  addToLog("Setting{20-X}: settingHiddenButton()");
   switch(name){
     case "totalDay":settingObj.totalDay++;break;
     case "streak":settingObj.repeatingStreak++;break;
@@ -443,29 +494,35 @@ function settingHiddenButton(name){
     case "maxRepeat":settingObj.toMaxRead++;break;
   }
   displayHiddenSettings()
+  addToLog("Setting{20-Z}: settingHiddenButton()");
 } 
 
 // # resetSettingData resets value of hidden setting global object settingObj. and put setHiddenSetting() to false.
 function resetSettingData(){
+  addToLog("Setting{21-X}: resetSettingData()");
   settingObj.totalDay = 0;
   settingObj.repeatingStreak = 0;
   settingObj.totalRepeat = 0;
   settingObj.todayRepeat = 0;
   settingObj.toMaxRead = 0;
   setHiddenSetting(false);
+  addToLog("Setting{21-Z}: resetSettingData()");
 }
 
 // # upon clicking appropraite hidden button, it will activate the hidden settings
 function displayHiddenSettings(){
+  addToLog("Setting{22-X}: displayHiddenSettings()");
   const {totalDay, repeatingStreak, totalRepeat, todayRepeat, toMaxRead} = settingObj;
   if(totalDay>=10 && repeatingStreak==0 && totalRepeat==0 && todayRepeat==0 && toMaxRead>=10){
   // if(totalDay>=1 && repeatingStreak==0 && totalRepeat==0 && todayRepeat==0 && toMaxRead>=0){    
     setHiddenSetting(true);
   }
+  addToLog("Setting{22-Z}: displayHiddenSettings()");
 }
 
 // # setHiddenSetting(value) will hide and display appropriate elements.
 function setHiddenSetting(value){
+  addToLog("Setting{23-X}: setHiddenSetting()");
   showHiddenSetting = value;
   if(value || !value){
     settingHiddenSave.style.display = value?"block":"none";
@@ -482,10 +539,12 @@ function setHiddenSetting(value){
     settingNumTodaysRepeat.style.display = value?"none":"block";
     settingNumMaxRepat.style.display = value?"none":"block";
   }
+  addToLog("Setting{23-Z}: setHiddenSetting()");
 }
 
 // # setSettingListValues() sets global object repeatObj to appropraite container that will be shown in screen.
 function setSettingListValues(){
+  addToLog("Setting{24-X}: setSettingListValues()");
   // % taking out five keys from gobal object repeatObj
   // % it contains info on, how much user has repeated in total, in single day, heart meter, streak and count of days since using this app
   const {totalDay, repeatingStreak, totalRepeat, todayRepeat, toMaxRead} = repeatObj;
@@ -502,10 +561,12 @@ function setSettingListValues(){
   settingInpTodaysRepeat.value = todayRepeat;
   settingInpMaxRepat.value = toMaxRead;
   setHiddenSetting(false)
+  addToLog("Setting{24-Z}: setSettingListValues()");
 }
 
 // # setNewRepeatValues() will set new dynamic value of setting inputs, as user has entered in global object repeatObj and apply in screen
 function setNewRepeatValues(){
+  addToLog("Setting{25-X}: setNewRepeatValues()");
   const {totalDay, repeatingStreak, totalRepeat, todayRepeat, toMaxRead} = settingInputs;
   repeatObj.totalDay = checkInputInt(totalDay.value);
   repeatObj.repeatingStreak = checkInputInt(repeatingStreak.value);
@@ -516,11 +577,13 @@ function setNewRepeatValues(){
   setLocalStorageData()
   // % setting the new data in screen
   setScreen()
+  addToLog("Setting{25-Z}: setNewRepeatValues()");
 }
 
 // # setScreen() takes value from localstorage and stores in global storage repeatObj
 // ^ then the value repeatObj is displayed in 3 part of screen
 function setScreen(){
+  addToLog("Setting{26-X}: setScreen()");
   // % getting data from local storage and storing in global object repeatObj
   localStorageDataToRepatObj()
   // % setNavigation() will display repeatObj data to record page(page 3)
@@ -529,27 +592,56 @@ function setScreen(){
   // % setSettingListValues() will display repeatObj data to setting page(page 3)
   // ^ it affects two parts of setting, 1) setting list 2) setting hidden input list
   setSettingListValues()
+  addToLog("Setting{26-Z}: setScreen()");
 }
 
 // # checkInputInt() is support function. It is used in setting hidden input list 
 // ^ it accepts any value that comes from <input> and perform analysis 
 // ^ returns numeric value if input is positive whole number else return 0
 function checkInputInt(value){
+  addToLog("Setting{27-X}: checkInputInt()");
   // % its value is input from hidden settings, it convert num into int and other value into 0
   var intValue = parseInt(value) ? parseInt(value) : 0;
   // % it wil make sure the value is positive whole number
   intValue = intValue>=0 && intValue<=10000000 ? intValue : 0;
+  addToLog("Setting{27-Z}: checkInputInt()");
   return intValue;
 }
 
 // # manageSentencePgButtons() show and hide button crate in sentence page(page 2) depending of if the user is using app for first time or not.
 function manageSentencePgButtons(){
+  addToLog("Setting{28-X}: manageSentencePgButtons()");
   // % if beginner == true, showing beginner button crate and hiding other button crate
   sentenceBeginnerBtnCrate.style.display = beginner?"flex":"none";
   // % if beginner == false, showing veterian button crate and hiding other button crate
   sentenceVeteranBtnCrate.style.display = beginner?"none":"flex";
+  addToLog("Setting{28-Z}: manageSentencePgButtons()");
 }
 
+// # setSentenceUpdate() is activated when user want to update their existing sentences
+// ^ user can add, remove and edit sentences and save in local storage
+function setSentenceUpdate(){
+  addToLog("Setting{28.1-X}: setSentenceUpdate()");
+  gotoPage(2)
+  // % setting beginers to false
+  beginner = false;
+  // % as beginer is false, user will get other options while updating sentences
+  // ^ manageSentencePgButtons() ensure other feature is activated
+  manageSentencePgButtons();
+  // % getting all data from local storage
+  const localData = getLocalStorageData();
+  // % filtering local data to only array of sentences
+  const localDataItemArr = localData.items;
+  // % removing 3 input item otherwise, 3 empty inputs will be added because of firstFunction()
+  removeItem(1)
+  removeItem(2)
+  removeItem(3)
+  // % adding new item<input> with data from local storage to sentence list
+  localDataItemArr.map(data=>{
+    addItem(data);
+  })
+  addToLog("Setting{28.1-Z}: setSentenceUpdate()");
+}
 
 // ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
 // ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
@@ -572,19 +664,22 @@ const nowDate = {
 // ^ fullDate format =>  month-day-year
 // ! <+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>=<+>
 function getFullDeviceDate(){
+  addToLog("Record-Sub{29-X}: getFullDeviceDate()");
   var deviceDate = "11-14-2023";
   const dateData = {
     year: new Date().getFullYear(),
-    month: new Date().getMonth(),
+    month: new Date().getMonth() + 1,
     day: new Date().getDate(),
   }
   deviceDate = dateData.month+"-"+dateData.day+"-"+dateData.year;
   // deviceDate = "11-29-2023";
+  addToLog("Record-Sub{29-Z}: getFullDeviceDate() = "+deviceDate);
   return deviceDate;
 }
 
 // # calcDateDiffrence take starting day, and usage nowDate.date.fullDate() to find the diffrence between two date
 function calcDateDiffrence(startDate){
+  addToLog("Record-Sub{30-X}: calcDateDiffrence()");
   var currentDate = nowDate.date.fullDate();
   // % input date formate month-day-year
   let date1 = new Date(startDate);
@@ -593,20 +688,25 @@ function calcDateDiffrence(startDate){
   let Difference_In_Time = date2.getTime() - date1.getTime();
   // % To calculate the no. of days between two dates
   let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+  addToLog("Record-Sub{30-Z}: calcDateDiffrence()");
   return Difference_In_Days;
 }
 
 // # diff takes two date as parameteres and return diffrence between two dates in days
 // ! ?????? NEED for testing.
 function diff(date1, date2){
+  addToLog("Record-Sub{31-X}: diff("+date1+", "+date2+")");
   // % converting date1 & date2 in new Date format
   const datex1 = new Date(date1);
   const datex2 = new Date(date2);
+  addToLog("Record-Sub{31-Y.1}: datex1 = "+datex1+", datex2 = "+datex2);
   // % To calculate the time difference of two dates
   const diff_in_time = datex2.getTime() - datex1.getTime();
+  addToLog("Record-Sub{31-Y.2}: diff_in_time = "+diff_in_time);
   // % To calculate the no. of days between two dates
   const diff_in_days = Math.round(diff_in_time / (1000 * 3600 * 24));
   // % returning diff_in_days
+  addToLog("Record-Sub{31-Y.3}: diff_in_days = "+diff_in_days);
   return diff_in_days;
 }
 
@@ -618,6 +718,7 @@ function diff(date1, date2){
 // # newOrOldUser() runs at the begenning before any other funtion and figure out if the user is using first time or old user.
 // ^ depending on local storage data, it will send user to landingp page(page1){new user} or record page(page3){old user}
 function newOrOldUser(){
+  addToLog("Storage{32-X}: newOrOldUser()");
   // % taking data from local storage with name repeatObj
   const data = localStorage.getItem("repeatObj");
   // $ console.log("data",data)
@@ -631,45 +732,55 @@ function newOrOldUser(){
     // % since the data is not null sending user to page 3
     gotoPage(3);
   } 
+  addToLog("Storage{32-Z}: newOrOldUser()");
 }
 
 // # getLocalStorageData() gets data from local storage
 // ^ if the local data is null, it return repeatObj(global object) value
 function getLocalStorageData(){
+  addToLog("Storage{33-X}: getLocalStorageData()");
   // % taking data from local storage with name repeatObj
   const repeatObjData = localStorage.getItem("repeatObj");
-  if(repeatObjData == null){
-    // % returning repeatObj value 
-    return repeatObjReset;
+  // % returnValue will containa default value of repeatObjReset, which is the case if repeatObjData == null
+  var returnValue = repeatObjReset;
+  if(repeatObjData != null){
+    // % if repeatObjData isn't null, returning parsed value of repeatObjData
+    returnValue = JSON.parse(repeatObjData);
   }
-  else{
-    // % as local data wasn't null, returning parsed value of repeatObjData
-    return JSON.parse(repeatObjData);
-  }
+  addToLog("Storage{33-Z}: getLocalStorageData()");
+  return returnValue; 
 }
 
 // # setting gobal object repeatObj value to local storage with same name 'repeatObj'
 function setLocalStorageData(){
+  addToLog("Storage{34-X}: setLocalStorageData()");
   localStorage.setItem("repeatObj", JSON.stringify(repeatObj));
+  addToLog("Storage{34-Z}: setLocalStorageData()");
 }
 
 // # clearing local storgae value with name 'repeatObj'
 function clearLocalStorage(){
+  addToLog("Storage{35-X}: clearLocalStorage()");
   localStorage.removeItem("repeatObj");
   location.reload()
+  addToLog("Storage{35-Z}: clearLocalStorage()");
 }
 
 // # resetLocalStorage() restores 0 vlaue to global object repeatObj and stores in local storage
 function resetLocalStorage(){
+  addToLog("Storage{36-X}: resetLocalStorage()");
   // % restoring 0 value to repeatObject
   repeatObj = {...repeatObjReset}
   // % saving reset global obj repeatObj to local storage
    setLocalStorageData();
+   addToLog("Storage{36-Z}: resetLocalStorage()");
 }
 
 // # it combines two function. get data from local storage and stores in global object repatObj
 function localStorageDataToRepatObj(){
+  addToLog("Storage{37-X}: localStorageDataToRepatObj()");
   repeatObj = {...getLocalStorageData()}
+  addToLog("Storage{37-Z}: localStorageDataToRepatObj()");
 }
 
 
@@ -715,19 +826,27 @@ $ copy second line from normal day
 */
 // # IHaveReadCooldown() makes sure that user won't spam I've read button. Cooldown is 3 seconds.
 function IHaveReadCooldown(){
+  addToLog("Record-Page{38-X}: IHaveReadCooldown()");
+  addToLog("Record-Page{38-Y.1} =====================================================");
   if(!btnCooldown){
     IHaveRead();
     recordButton.classList.add("landingButtonActive");
     btnCooldown = true;
     setTimeout(()=>{
+      addToLog("Record-Page{38-X.1}: IHaveReadCooldown() setTimeOut");
       btnCooldown = false;
       recordButton.classList.remove("landingButtonActive");
+      addToLog("Record-Page{38-Z.1}: IHaveReadCooldown() setTimeOut");
     },3000)
   }
+  addToLog("Record-Page{38-Y.2} =====================================================");
+  addToLog("Record-Page{38-Z}: IHaveReadCooldown()");
 }
 
 // # IHaveRead() is active when user click I've read button in recording page(page 3)
 function IHaveRead(){
+  addToLog("Record-Page{39-X}: IHaveRead()");
+  addToLog("Record-Page{39-Y.1} --------------------------------------------------------------------");
   // % getFullDeviceDate() gets fresh device date
   const freshDeviceDate = getFullDeviceDate();
   // % taking out data varibales from localStorage, if the storge is null it will return repeatObjReset
@@ -794,20 +913,25 @@ function IHaveRead(){
   }
   // & <>~~~~~<>~~~~~<>~~~~~<>~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>
   else{
+    addToLog("Record-Page{38-X}: IHaveRead(), ERROR - It's a Bug Day.");
     console.log("Bugged Day : ERROR - It's Bug.")
   }
   // & <>~~~~~<>~~~~~<>~~~~~<>~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>~~~~~<>
   setScreen()
+  addToLog("Record-Page{39-Y.2} --------------------------------------------------------------------");
+  addToLog("Record-Page{39-Z}: IHaveRead()");
 }
 
 // # setShortDataToRepeatObj(sd,d,s,a,t) is a support function used in IHaveRead()
 // ^ it takes data form parameter and stores in repeatObj
 function setShortDataToRepeatObj(sd,d,s,a,t){
+  addToLog("Record-Page{40-X}: setShortDataToRepeatObj()");
   repeatObj.savedDate = sd;
   repeatObj.totalDay = d;
   repeatObj.repeatingStreak = s;
   repeatObj.totalRepeat = a;
   repeatObj.todayRepeat = t;
+  addToLog("Record-Page{40-Z}: setShortDataToRepeatObj()");
 }
 
 
@@ -817,19 +941,23 @@ function setShortDataToRepeatObj(sd,d,s,a,t){
 
 // % Mightbe UseFul [?][?][?]
 function DateIdToDateInt(item){
+  addToLog("Extra{41-X}: DateIdToDateInt()");
   var len = item.length,year = [], c=0;
   for(var a=len-1,c=0;a>=len-4;a--,c++){
     year[c] = item[a];
   }
   var yearData = year[0]+year[1]+year[2]+year[3];
   yearData = parseInt(reverseString(yearData));
+  addToLog("Extra{41-Z}: DateIdToDateInt()");
   return yearData;
 }
 // % Mightbe UseFul [?][?][?]
 function reverseString(str) {
+  addToLog("Extra{4Z-X}: reverseString()");
   var splitString = str.split("");
   var reverseArray = splitString.reverse();
   var joinArray = reverseArray.join("");
+  addToLog("Extra{4Z-Z}: reverseString()");
   return joinArray;
 }
 // ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
@@ -840,6 +968,24 @@ function reverseString(str) {
 function gotoAboutPage(){
   gotoPage(5);
 }
+
+// ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
+// ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
+// ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
+
+// # 
+
+function gotoLog(){
+  gotoPage(6);
+}
+// var infoCount=0;
+function addToLog(info){
+  const infoBox = createNewElement('li')
+  infoBox.innerText = info;
+  logContainer.appendChild(infoBox);
+  
+}
+//logContainer
 
 // ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
 // ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
