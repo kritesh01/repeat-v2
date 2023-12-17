@@ -698,15 +698,20 @@ function diff(date1, date2){
   addToLog("Record-Sub{31-X}: diff("+date1+", "+date2+")");
   // // addToLog("Record-Sub{31-X.1}: diff("+date1.replace(/-/g, "/")+", "+date2.replace(/-/g, "/")+")");
   // % converting date1 & date2 in new Date format
-  const datex1 = new Date(date1);
-  const datex2 = new Date(date2);
+  const datex1 = new Date(formattedForSafari(date1));
+  const datex2 = new Date(formattedForSafari(date2));
   addToLog("Record-Sub{31-Y.1}: datex1 = "+datex1+", datex2 = "+datex2);
-  // % if the previous conversion dosen't work then again formating for safari.
-  const datey1 = isDateValid(datex1) ? datex1 : formattedForSafari(datex1);
-  const datey2 = isDateValid(datex1) ? datex2 : formattedForSafari(datex2);
-  addToLog("Record-Sub{31-Y.2}: datey1 = "+datey1+", datey2 = "+datey2);
+
+  
+  // // % if the previous conversion dosen't work then again formating for safari.
+  // const datey1 = isDateValid(datex1) ? datex1 : formattedForSafari(datex1);
+  // const datey2 = isDateValid(datex1) ? datex2 : formattedForSafari(datex2);
+  // addToLog("Record-Sub{31-Y.2}: datey1 = "+datey1+", datey2 = "+datey2);
+  
+  
+  
   // % To calculate the time difference of two dates
-  const diff_in_time = datey2.getTime() - datey1.getTime();
+  const diff_in_time = datex1.getTime() - datex2.getTime();
   addToLog("Record-Sub{31-Y.3}: diff_in_time = "+diff_in_time);
   // % To calculate the no. of days between two dates
   const diff_in_days = Math.round(diff_in_time / (1000 * 3600 * 24));
@@ -717,14 +722,20 @@ function diff(date1, date2){
 
 
 function formattedForSafari(dateString){
-  // 12-17-2023 => 2023-12-17
+  // Split the date string into day, month, and year components
   var dateComponents = dateString.split("-");
-  var formattedDate = new Date(dateComponents[2], dateComponents[0] - 1, dateComponents[1]);
-  addToLog("Record-Sub{31.1-Y}: formattedForSafari() "+dateString+" => "+formattedDate);
-  console.log(formattedDate==NaN?true:false)
-  console.log(isDateValid(dateString))
-  console.log(new Date(formattedDate))
-  return new Date(formattedDate);
+  // Create a new Date object with the components rearranged in the "YYYY-MM-DD" format
+  var formattedDate = new Date(dateComponents[2], dateComponents[1] - 1, dateComponents[0]);
+  // Check if the formatted date is valid
+  var val;
+  if (!isNaN(formattedDate.getTime())) {
+    val = formattedDate;
+  } else {
+    val = "Invalid date";
+  }
+  
+
+  return val;
 }
 
 function isDateValid(dateStr){
