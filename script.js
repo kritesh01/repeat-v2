@@ -702,8 +702,8 @@ function diff(date1, date2){
   const datex2 = new Date(date2);
   addToLog("Record-Sub{31-Y.1}: datex1 = "+datex1+", datex2 = "+datex2);
   // % if the previous conversion dosen't work then again formating for safari.
-  const datey1 = datex1 == NaN ? formattedForSafari(datex1) : datex1;
-  const datey2 = datex2 == NaN ? formattedForSafari(datex2) : datex2;
+  const datey1 = isDateValid(datex1) ? datex1 : formattedForSafari(datex1);
+  const datey2 = isDateValid(datex1) ? datex2 : formattedForSafari(datex2);
   addToLog("Record-Sub{31-Y.2}: datey1 = "+datey1+", datey2 = "+datey2);
   // % To calculate the time difference of two dates
   const diff_in_time = datey2.getTime() - datey1.getTime();
@@ -715,14 +715,21 @@ function diff(date1, date2){
   return diff_in_days;
 }
 
+
 function formattedForSafari(dateString){
   // 12-17-2023 => 2023-12-17
   var dateComponents = dateString.split("-");
   var formattedDate = new Date(dateComponents[2], dateComponents[0] - 1, dateComponents[1]);
-  addToLog("Record-Sub{31.1-Y}: "+dateString+" => "+formattedDate);
-  return formattedDate;
+  addToLog("Record-Sub{31.1-Y}: formattedForSafari() "+dateString+" => "+formattedDate);
+  console.log(formattedDate==NaN?true:false)
+  console.log(isDateValid(dateString))
+  console.log(new Date(formattedDate))
+  return new Date(formattedDate);
 }
 
+function isDateValid(dateStr){
+  return !isNaN(new Date(dateStr))
+}
 // ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
 // ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
 // ! [][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]<><><><><>[][]
